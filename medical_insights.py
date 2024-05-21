@@ -4,7 +4,7 @@ import json
 import os
 
 # 设置页面配置
-st.set_page_config(page_title="UI Demo", layout="centered")
+st.set_page_config(page_title="Medical Insights", layout="centered")
 
 # 定义 topics 和 primary_topics_list
 topics = {
