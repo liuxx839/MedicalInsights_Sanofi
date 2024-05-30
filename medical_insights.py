@@ -111,7 +111,7 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
   
-    st.header("Select Options")
+    # st.header("Select Options")
     
     # 用户输入框
     user_input = st.text_area("Enter Medical Insights: ")
