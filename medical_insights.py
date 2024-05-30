@@ -103,6 +103,14 @@ st.title("Medical Insights Tagging&Rewrite")
 
 # 多选框和下拉菜单
 with st.sidebar:
+    st.markdown("""
+    Insight应涵盖4W要素（Who-谁、What-什么、Why-为什么、Wayfoward-未来方向）。
+    以下是一个合格样式的示例："一位{匿名机构}的{匿名人物}指出{观点}，
+    并阐述了{内容间的逻辑联系}，进而提出了{后续方案}"。
+    Insight Copilot：您可以先提交您的初稿，然后使用此工具进行重写。
+    您还可以直接修改重写后的结果。
+    """)
+  
     st.header("Select Options")
     
     # 用户输入框
