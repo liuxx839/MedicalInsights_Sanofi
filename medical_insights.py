@@ -106,8 +106,8 @@ with st.sidebar:
     st.markdown("""
     <div style="font-size:18px; font-weight:bold;">
     - Insight应涵盖4W要素（Who-谁、What-什么、Why-为什么、Wayfoward-未来方向）。<br>
-    以下是一个合格样式的示例："一位{匿名机构}的{匿名人物}指出{观点}，并阐述了{内容间的逻辑联系}，进而提出了{后续方案}"。<br>
-    - Insight Copilot：您可以先提交您的初稿，然后使用此工具进行重写。您还可以直接修改重写后的结果。
+    以下是一个合格样式的示例："一位{脱敏机构}的{科室}的{脱敏人物}指出{观点}，并阐述了{内容间的逻辑联系}，进而提出了{后续方案}"。<br>
+    - Insight Copilot：您可以在下面提交您的初稿，然后使用此工具进行对内容进行打标或者重写。您还可以直接修改重写后的结果。
     </div>
     """, unsafe_allow_html=True)
   
