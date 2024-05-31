@@ -73,7 +73,7 @@ def rewrite(text, institution, person):
 
 执行逻辑：
 1.如果判断原始文本缺失太多内容，请礼貌提醒，无需执行下面的任何步骤或者逻辑
-2. 否则： ”一名{institution}的{person}提出“， 不需要修改
+2. 否则： ”一名{institution}的{department}的{person}提出“， 不需要修改
 3。 原文如果存在的机构和人物，需要脱敏, 替换为“一名{institution}的{person}” 相应的部份
 4.其中{{观点}},{{内容间的逻辑关系}},{{进一步的方案}} 要源于原始文本，尽量使用原文。不需要特别指出{{观点}},{{内容间的逻辑关系}},{{进一步的方案}}
 5.只返回改写后的文本即可，无需解释。不要作额外推理
@@ -107,7 +107,7 @@ with st.sidebar:
     <div style="font-size:18px; font-weight:bold;">
     - Insight应涵盖4W要素（Who-谁、What-什么、Why-为什么、Wayfoward-未来方向）。<br>
     以下是一个合格样式的示例："一位{脱敏机构}的{科室}的{脱敏人物}指出{观点}，并阐述了{内容间的逻辑联系}，进而提出了{后续方案}"。<br>
-    - Insight Copilot：您可以在下面提交您的初稿，然后使用此工具进行对内容进行打标或者重写。您还可以直接修改重写后的结果。
+    - Insight Copilot：您可以在下面提交您的初稿，然后使用此工具对内容进行打标或者重写。您还可以直接修改重写后的结果。
     </div>
     """, unsafe_allow_html=True)
   
