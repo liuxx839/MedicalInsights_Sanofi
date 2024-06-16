@@ -47,7 +47,7 @@ client = ZhipuAI(api_key=api_key)
 # 修改generate_tag函数
 def generate_tag(text):
     completion = client.chat.completions.create(
-        model="glm-4",  # 填写需要调用的模型名称
+        model="glm-4-air",  # 填写需要调用的模型名称
         messages=[
             {"role": "system", "content": f'''
 你的职责是给文本打标签，标签只能在下面的类别里,最多最多选三个最接近的,不需要解释，直接返回结果即可,不需要任何其他文字,如果判断内容不符合任何标签，返回out of label
