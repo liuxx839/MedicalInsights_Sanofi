@@ -63,7 +63,7 @@ def generate_tag(text):
 
 def rewrite(text, institution, person):
     completion = client.chat.completions.create(
-        model="glm-4",  # 填写需要调用的模型名称
+        model="glm-4-air",  # 填写需要调用的模型名称
         messages=[
        {"role": "system", "content": f'''
 你的职责是改写文本，原则尽量使用原始文本内容
