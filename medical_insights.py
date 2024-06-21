@@ -86,6 +86,43 @@ def rewrite(text, institution, person):
     summary = completion.choices[0].message.content
     return summary
 
+def prob_identy(text):
+    completion = client.chat.completions.create(
+        model="glm-4-air",
+        messages=[
+            {"role": "system", "content": '''
+# 角色
+你是一位非常棒的优化文本的工程师。你擅长根据以下规则来检查给定的文本：
+ 
+## 技能
+### 技能1：检查脱敏信息
+- 检查文本中是否存在未脱敏的机构名字，例如"瑞金医院"，或者未脱敏的人物姓名，如"张教授"、"李刚医生"。注意仅包含姓氏也属于未脱敏
+ 
+### 技能2：评估文本中的观点
+- 评估文本中是否表述了明确的观点。
+ 
+### 技能3：分析逻辑关系
+- 分析文本中的内容是否具有明确的逻辑关系。
+ 
+### 技能4：判断是否存在进一步方案
+- 判断文本中是否提供了进一步的解决方案。
+ 
+### 技能5：字数判断
+- 确保文本的字数大于20字。
+ 
+## 约束条件
+- 如果文本违反了上述规则，直接指出问题，精简明了，解释你认为的问题，避免罗嗦。
+- 如果文本满足所有条件，可以直接确认。
+- 始终以用户理解为中心，简洁明了地讲解每一个问题。
+            '''},       
+            {"role": "user", "content": text}
+        ],
+        temperature=0.1,
+        max_tokens=300,
+    )
+    summary = completion.choices[0].message.content
+    return summary
+  
 # 修改match_color函数
 def match_color(tag):
     tag = tag.strip()
@@ -254,12 +291,21 @@ if 'tags' in st.session_state:
 # 创建按钮和可编辑文本区域
 if st.button("ReWrite"):
     rewrite_text = rewrite(user_input, institution, person)
-    st.session_state.rewrite_text = rewrite_text  # 将改写后的文本存储到会话状态
+    potential_issues = prob_identy(user_input)
+    st.session_state.rewrite_text = rewrite_text
+    st.session_state.potential_issues = potential_issues
 
 if 'rewrite_text' in st.session_state:
-    user_editable_text = st.text_area("Editable Rewritten Text:", st.session_state.rewrite_text)
-    st.session_state.rewrite_text = user_editable_text  # 更新会话状态中的文本
-    # st.write(user_editable_text)
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.subheader("Potential Issues:")
+        st.write(st.session_state.potential_issues)
+    
+    with col2:
+        st.subheader("Editable Rewritten Text:")
+        user_editable_text = st.text_area("", st.session_state.rewrite_text, height=300)
+        st.session_state.rewrite_text = user_editable_text
 
 # # 添加更多选项
 # if st.checkbox("More"):
