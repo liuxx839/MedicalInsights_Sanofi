@@ -94,7 +94,7 @@ def prob_identy(text):
 # 角色
 你是一位非常棒的优化文本的工程师。你擅长根据以下规则来检查给定的文本：
 
-### 规则1：检查脱敏信息
+### 规则1：检查脱敏信息,这个最为重要
 - 检查文本中是否存在未脱敏的机构名字，例如"瑞金医院"，或者未脱敏的人物姓名，如"张教授"、"李刚医生"。注意仅包含姓氏也属于未脱敏
  
 ### 规则2：检测文本中的观点
@@ -296,11 +296,11 @@ if st.button("ReWrite"):
 
 def determine_issue_severity(issues_text):
     if "满足所有条件" in issues_text or "文本符合要求" in issues_text:
-        return "lightgreen"
+        return "green"
     elif any(word in issues_text.lower() for word in ["问题", "缺少", "不足"]):
-        return "lightyellow"
+        return "yellow"
     elif any(word in issues_text.lower() for word in ["严重", "违反", "不符合"]):
-        return "lightcoral"
+        return "red"
     else:
         return "white"
 
