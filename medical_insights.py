@@ -112,8 +112,8 @@ def prob_identy(text):
  
 ## 约束条件
 - 如果文本违反了上述规则，直接指出问题，精简明了，解释你认为的问题，避免罗嗦。
-- 如果文本满足所有条件，可以直接确认。
-- 始终以用户理解为中心，简洁明了地讲解每一个问题。
+- 如果文本满足所有条件，可以直接确认，并回复：满足所有条件
+- 如果违反规则，请总结为"问题", "缺少", "不足"， 或者更眼中的为 "严重", "违反", "不符合"
             '''},       
             {"role": "user", "content": text}
         ],
@@ -295,17 +295,52 @@ if st.button("ReWrite"):
     st.session_state.rewrite_text = rewrite_text
     st.session_state.potential_issues = potential_issues
 
+def determine_issue_severity(issues_text):
+    if "满足所有条件" in issues_text or "文本符合要求" in issues_text:
+        return "lightgreen"
+    elif any(word in issues_text.lower() for word in ["问题", "缺少", "不足"]):
+        return "lightyellow"
+    elif any(word in issues_text.lower() for word in ["严重", "违反", "不符合"]):
+        return "lightcoral"
+    else:
+        return "white"
+
 if 'rewrite_text' in st.session_state:
     col1, col2 = st.columns(2)
     
     with col1:
         st.subheader("Potential Issues:")
+        background_color = determine_issue_severity(st.session_state.potential_issues)
+        st.markdown(
+            f"""
+            <style>
+            .stMarkdown {{
+                background-color: {background_color};
+                padding: 10px;
+                border-radius: 5px;
+            }}
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
         st.write(st.session_state.potential_issues)
     
     with col2:
         st.subheader("Editable Rewritten Text:")
         user_editable_text = st.text_area("", st.session_state.rewrite_text, height=300)
         st.session_state.rewrite_text = user_editable_text
+
+# if 'rewrite_text' in st.session_state:
+#     col1, col2 = st.columns(2)
+    
+#     with col1:
+#         st.subheader("Potential Issues:")
+#         st.write(st.session_state.potential_issues)
+    
+#     with col2:
+#         st.subheader("Editable Rewritten Text:")
+#         user_editable_text = st.text_area("", st.session_state.rewrite_text, height=300)
+#         st.session_state.rewrite_text = user_editable_text
 
 # # 添加更多选项
 # if st.checkbox("More"):
