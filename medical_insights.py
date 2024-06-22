@@ -313,7 +313,7 @@ if 'rewrite_text' in st.session_state:
         background_color = determine_issue_severity(st.session_state.potential_issues)
         st.markdown(
             f"""
-            <div style="background-color: {background_color}; padding: 10px; border-radius: 5px;">
+            <div style="background-color: {background_color}; color: black; padding: 10px; border-radius: 5px; font-family: sans-serif;">
                 {st.session_state.potential_issues}
             </div>
             """,
