@@ -309,17 +309,12 @@ if 'rewrite_text' in st.session_state:
     col1, col2 = st.columns(2)
     
     with col1:
-        st.subheader("Potential Issues:")
         background_color = determine_issue_severity(st.session_state.potential_issues)
         st.markdown(
             f"""
-            <style>
-            .stMarkdown {{
-                background-color: {background_color};
-                padding: 10px;
-                border-radius: 5px;
-            }}
-            </style>
+            <div style="background-color: {background_color}; padding: 10px; border-radius: 5px;">
+                <h3>Potential Issues:</h3>
+            </div>
             """,
             unsafe_allow_html=True
         )
