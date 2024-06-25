@@ -88,7 +88,7 @@ def rewrite(text, institution, person):
 
 def prob_identy(text):
     completion = client.chat.completions.create(
-        model="glm-4-air",
+        model="glm-4",
         messages=[
             {"role": "system", "content": '''
 你是医学insight检测员指令
