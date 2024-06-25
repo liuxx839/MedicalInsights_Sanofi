@@ -88,7 +88,7 @@ def rewrite(text, institution, person):
 
 def prob_identy(text):
     completion = client.chat.completions.create(
-        model="glm-4",
+        model="glm-4-air",
         messages=[
             {"role": "system", "content": '''
 你是医学insight检测员指令
@@ -102,9 +102,8 @@ def prob_identy(text):
 
 响应规则
 
-违反规则: 简明指出问题,解释原因
-满足所有条件: 直接回复"满足所有条件"
-违规程度: 根据严重性,用"问题/缺少/不足"或"严重/违反/不符合"概括，然后再简述问题所在
+综合判断：首先综合判断整体规则服从情况，只能从：“满足所有条件”，“基本满足”，“需要修改”三个词中选择
+违反规则: 如果有违反情况，请简明指出问题,解释原因，不要罗嗦
             '''},       
             {"role": "user", "content": text}
         ],
@@ -289,9 +288,9 @@ if st.button("ReWrite"):
 def determine_issue_severity(issues_text):
     if "满足所有条件" in issues_text or "文本符合要求" in issues_text:
         return "green"
-    elif any(word in issues_text.lower() for word in ["严重", "违反", "不符合","未脱敏"]):
+    elif any(word in issues_text.lower() for word in ["需要修改"]):
         return "red"
-    elif any(word in issues_text.lower() for word in ["问题", "缺少", "不足"]):
+    elif any(word in issues_text.lower() for word in ["基本满足"]):
         return "yellow"
     else:
         return "white"
