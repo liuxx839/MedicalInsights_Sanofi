@@ -274,8 +274,11 @@ st.write(f"**Person:** {person}")
 
 # 替换默认标签，按逗号分词
 if 'tags' in st.session_state:
-    user_generated_tags = st.session_state.tags.split(",")  # 按逗号分词
-    tag_html = " ".join([f'<span class="tag" style="background-color: {match_color(tag.strip())};">{tag.strip()}</span>' for tag in user_generated_tags])
+    # 使用正则表达式同时匹配逗号和空白作为分隔符
+    user_generated_tags = re.split(r'[,\s]+', st.session_state.tags.strip())
+    # 移除空字符串
+    user_generated_tags = [tag for tag in user_generated_tags if tag]
+    tag_html = " ".join([f'<span class="tag" style="background-color: {match_color(tag)};">{tag}</span>' for tag in user_generated_tags])
     st.markdown(f"**AutoTags:** {tag_html}", unsafe_allow_html=True)
 
 # 创建按钮和可编辑文本区域
