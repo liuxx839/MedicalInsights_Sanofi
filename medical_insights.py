@@ -293,7 +293,7 @@ def determine_issue_severity(issues_text):
         return "green"
     elif any(word in issues_text.lower() for word in ["问题", "缺少", "不足"]):
         return "yellow"
-    elif any(word in issues_text.lower() for word in ["严重", "违反", "不符合"]):
+    elif any(word in issues_text.lower() for word in ["严重", "违反", "不符合","未脱敏"]):
         return "red"
     else:
         return "white"
