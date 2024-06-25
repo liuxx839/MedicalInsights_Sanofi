@@ -2,6 +2,7 @@ import streamlit as st
 from zhipuai import ZhipuAI
 import json
 import os
+import re
 
 # 设置页面配置
 st.set_page_config(page_title="Medical Insights", layout="centered")
