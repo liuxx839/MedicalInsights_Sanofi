@@ -190,8 +190,8 @@ with st.sidebar:
     department = st.selectbox(
         "Select Dsepartment",
         [
-              "内科",
-              "外科",
+              "内分泌科",
+              "肾移植科",
               "妇产科",
               "儿科",
               "急诊科",
