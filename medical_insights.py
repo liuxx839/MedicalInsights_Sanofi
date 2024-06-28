@@ -9,8 +9,9 @@ from config import get_rewrite_system_message
 
 # 在主程序文件的开头
 from config import (
-    topics, 
+    topics, diseases，
     generate_tag_system_message, 
+    generate_diseases_system_message
     prob_identy_system_message,
     institutions,
     departments,
@@ -21,6 +22,7 @@ from config import (
 st.set_page_config(page_title="Medical Insights", layout="centered")
 
 primary_topics_list = list(topics.keys())
+primary_diseases_list = list(diseases.keys())
 
 # 颜色映射，超过7个颜色的primary_topics_list都赋予粉色
 color_list = [
@@ -76,6 +78,20 @@ def generate_tag(text,model_choice="llama3-70b-8192"):
     )
     summary = completion.choices[0].message.content.strip()
     return summary
+
+# def generate_diseases_tag(text,model_choice="llama3-70b-8192"):
+#     completion = client.chat.completions.create(
+#         model=model_choice,  # 填写需要调用的模型名称
+#         messages=[
+#             {"role": "system", "content": 
+#             generate_diseases_system_message.format(primary_diseases_list=','.join(primary_diseases_list))},       
+#             {"role": "user", "content": text}
+#         ],
+#         temperature=0.1,
+#         max_tokens=300,
+#     )
+#     summary = completion.choices[0].message.content.strip()
+#     return summary
 
 def rewrite(text, institution, department, person,model_choice="llama3-70b-8192"):
     completion = client.chat.completions.create(
