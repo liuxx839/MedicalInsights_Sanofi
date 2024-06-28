@@ -48,7 +48,7 @@ def setup_client():
     st.sidebar.markdown("---")
     model_choice = st.sidebar.selectbox(
         "Select Model",
-        ["llama3-70b-8192", "glm-4-air","glm-4-9b-chat"],
+        ["llama3-70b-8192", "glm-4-air","THUDM/glm-4-9b-chat"],
         index=0  # 默认选择 llama3-70b-8192
     )
 
