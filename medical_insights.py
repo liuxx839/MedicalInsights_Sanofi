@@ -46,7 +46,7 @@ def setup_client():
     model_choice = st.sidebar.selectbox(
         "Select Model",
         ["llama3-70b-8192", "glm-4-air"],
-        index=1  # 默认选择 llama3-70b-8192
+        index=0  # 默认选择 llama3-70b-8192
     )
 
     if model_choice == "llama3-70b-8192":
