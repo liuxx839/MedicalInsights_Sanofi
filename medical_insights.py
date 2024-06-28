@@ -45,7 +45,7 @@ def setup_client():
     st.sidebar.markdown("---")
     model_choice = st.sidebar.selectbox(
         "Select Model",
-        ["llama3-70b-8192", "glm-4-0520"],
+        ["llama3-70b-8192", "glm-4-air"],
         index=0  # 默认选择 llama3-70b-8192
     )
 
@@ -85,7 +85,7 @@ def rewrite(text, institution, department, person,model_choice="llama3-70b-8192"
             {"role": "user", "content": text}
         ],
         temperature=0.1,
-        max_tokens=300,
+        max_tokens=500,
     )
     summary = completion.choices[0].message.content
     return summary
@@ -98,7 +98,7 @@ def prob_identy(text,model_choice="llama3-70b-8192"):
             {"role": "user", "content": text}
         ],
         temperature=0.1,
-        max_tokens=300,
+        max_tokens=500,
     )
     summary = completion.choices[0].message.content
     return summary
