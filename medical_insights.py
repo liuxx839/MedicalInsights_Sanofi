@@ -4,11 +4,12 @@ import json
 import os
 import re
 
+from config import get_rewrite_system_message
+
 # 在主程序文件的开头
 from config import (
     topics, 
     generate_tag_system_message, 
-    rewrite_system_message, 
     prob_identy_system_message,
     institutions,
     departments,
