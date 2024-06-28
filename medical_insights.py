@@ -62,8 +62,7 @@ def generate_tag(text):
         model="glm-4-air",  # 填写需要调用的模型名称
         messages=[
             {"role": "system", "content": 
-generate_tag_system_message.format(primary_topics_list=','.join(primary_topics_list))}
-},       
+generate_tag_system_message.format(primary_topics_list=','.join(primary_topics_list))},       
             {"role": "user", "content": text}
         ],
         temperature=0.1,
