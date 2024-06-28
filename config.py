@@ -18,9 +18,10 @@ generate_tag_system_message = '''
 {primary_topics_list}
 '''
 
-rewrite_system_message = '''
+def get_rewrite_system_message(institution, department, person):
+    return f'''
 你的职责是改写文本，原则尽量使用原始文本内容
- 
+
 严格遵循下面的规范文本样式：
 一名{institution}的{department}的{person}提出{{观点}},{{内容间的逻辑关系}},{{进一步的方案}}
 
