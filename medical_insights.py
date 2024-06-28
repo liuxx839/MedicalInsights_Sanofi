@@ -19,19 +19,6 @@ from config import (
 # 设置页面配置
 st.set_page_config(page_title="Medical Insights", layout="centered")
 
-# 定义 topics 和 primary_topics_list
-# topics = {
-#   "获益/风险": ["治疗效果", "安全性评估", "副作用管理", "成本效益分析"],
-#   "竞争产品": ["市场替代品", "竞品分析", "市场份额", "产品比较"],
-#   "医疗器械与设备": ["医疗技术", "设备性能", "操作流程", "维护与校准"],
-#   "疾病诊断与治疗": ["诊断标准", "治疗方案", "疗效评估", "并发症处理"],
-#   "指南与共识": ["临床实践指南", "专家共识", "政策建议", "标准操作流程"],
-#   "卫生政策与环境": ["卫生法规", "政策影响", "健康经济学", "医疗体系分析"],
-#   "患者旅程、准入与支持": ["患者体验", "医疗准入", "患者支持计划", "健康教育资源"],
-#   "证据生成(临床试验/研究/医学发表)": ["临床试验设计", "研究成果", "医学论文", "数据共享政策"],
-#   "赛诺菲产品(疗效/安全性/其他)": ["产品特性", "临床试验结果", "患者反馈", "市场表现"],
-#   "科学数据": ["数据收集", "数据分析", "结果解释", "数据保护"]
-# }
 primary_topics_list = list(topics.keys())
 
 # 颜色映射，超过7个颜色的primary_topics_list都赋予粉色
@@ -63,7 +50,7 @@ def generate_tag(text):
         model="glm-4-air",  # 填写需要调用的模型名称
         messages=[
             {"role": "system", "content": 
-generate_tag_system_message.format(primary_topics_list=','.join(primary_topics_list))},       
+            generate_tag_system_message.format(primary_topics_list=','.join(primary_topics_list))},       
             {"role": "user", "content": text}
         ],
         temperature=0.1,
@@ -149,98 +136,6 @@ with st.sidebar:
         for topic in primary_topics:
             secondary_topics[topic] = st.multiselect(f"Select Secondary Topics for {topic}", topics[topic])
 
-  #   # 使用 selectbox 创建一个下拉菜单
-  #   institution = st.selectbox(
-  #       "Select Institution",
-  #       [
-  #           "大型医疗机构",
-  #           "综合性医院",
-  #           "专科医院",
-  #           "三甲医院",
-  #           "二甲医院",
-  #           "城市医院",
-  #           "省立医院",
-  #           "地区医院",
-  #           "医疗中心",
-  #           "教学医院",
-  #           "医疗集团",
-  #           "医疗机构",
-  #           "临床医院",
-  #           "医疗服务中心"
-  #       ]
-  #   )
-
-  # # 使用 selectbox 创建一个下拉菜单
-  #   department = st.selectbox(
-  #       "Select Dsepartment",
-  #       [
-  #             "内分泌科",
-  #             "肾移植科",
-  #             "妇产科",
-  #             "儿科",
-  #             "急诊科",
-  #             "心血管内科",
-  #             "神经内科",
-  #             "消化内科",
-  #             "呼吸内科",
-  #             "骨科",
-  #             "泌尿外科",
-  #             "心胸外科",
-  #             "整形外科",
-  #             "眼科",
-  #             "耳鼻喉科",
-  #             "口腔科",
-  #             "皮肤科",
-  #             "中医科",
-  #             "康复科",
-  #             "肿瘤科",
-  #             "放射科",
-  #             "检验科",
-  #             "病理科",
-  #             "药剂科",
-  #             "麻醉科",
-  #             "重症医学科",
-  #             "感染性疾病科",
-  #             "老年病科",
-  #             "精神心理科",
-  #             "肾内科",
-  #             "血液科",
-  #             "风湿免疫科",
-  #             "营养科",
-  #             "介入科",
-  #             "核医学科",
-  #             "超声科",
-  #             "体检中心",
-  #             "医学美容科"
-  #      ]
-  #   )
-
-  #   # 使用另一个 selectbox 创建一个下拉菜单
-  #   person = st.selectbox(
-  #       "Select Person",
-  #       [
-  #           "专家",
-  #           "医生",
-  #           "主任医师",
-  #           "副主任医师",
-  #           "主治医师",
-  #           "医疗团队成员",
-  #           "研究人员",
-  #           "学者",
-  #           "顾问",
-  #           "分析师",
-  #           "工作人员",
-  #           "主任",
-  #           "副主任",
-  #           "教授",
-  #           "副教授",
-  #           "讲师",
-  #           "医疗保健提供者",
-  #           "护士长",
-  #           "护士",
-  #           "研究员"
-  #       ]
-  #   )
 institution = st.selectbox("Select Institution", institutions)
 department = st.selectbox("Select Department", departments)
 person = st.selectbox("Select Person", persons)
