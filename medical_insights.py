@@ -11,7 +11,7 @@ from config import get_rewrite_system_message
 from config import (
     topics, diseases,
     generate_tag_system_message, 
-    generate_diseases_system_message
+    generate_diseases_system_message,
     prob_identy_system_message,
     institutions,
     departments,
