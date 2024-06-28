@@ -172,12 +172,12 @@ if st.button("ReWrite"):
     st.session_state.potential_issues = potential_issues
 
 def determine_issue_severity(issues_text):
-    if "满足所有条件" in issues_text or "文本符合要求" in issues_text:
-        return "green"
-    elif any(word in issues_text.lower() for word in ["需要修改"]):
+    if "需要修改" in issues_text:
         return "red"
-    elif any(word in issues_text.lower() for word in ["基本满足"]):
+    elif "基本满足" in issues_text or ("满足所有条件" in issues_text and "基本满足" in issues_text):
         return "yellow"
+    elif "满足所有条件" in issues_text:
+        return "green"
     else:
         return "white"
 
