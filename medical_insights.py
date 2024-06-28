@@ -9,7 +9,7 @@ from config import get_rewrite_system_message
 
 # 在主程序文件的开头
 from config import (
-    topics, diseases，
+    topics, diseases,
     generate_tag_system_message, 
     generate_diseases_system_message
     prob_identy_system_message,
