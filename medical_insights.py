@@ -71,17 +71,15 @@ generate_tag_system_message.format(primary_topics_list=','.join(primary_topics_l
     summary = completion.choices[0].message.content.strip()
     return summary
 
-def rewrite(text, institution, person):
+def rewrite(text, institution, department, person):
     completion = client.chat.completions.create(
-        model="glm-4-air",  # 填写需要调用的模型名称
+        model="glm-4-air",
         messages=[
-       {"role": "system", "content": 
-        rewrite_system_message
-        },       
-        {"role": "user", "content": text}
+            {"role": "system", "content": get_rewrite_system_message(institution, department, person)},
+            {"role": "user", "content": text}
         ],
-        temperature = .1,
-        max_tokens = 300,
+        temperature=0.1,
+        max_tokens=300,
     )
     summary = completion.choices[0].message.content
     return summary
@@ -272,7 +270,7 @@ if 'tags' in st.session_state:
 
 # 创建按钮和可编辑文本区域
 if st.button("ReWrite"):
-    rewrite_text = rewrite(user_input, institution, person)
+    rewrite_text = rewrite(user_input, institution, department, person)
     potential_issues = prob_identy(user_input)
     st.session_state.rewrite_text = rewrite_text
     st.session_state.potential_issues = potential_issues
