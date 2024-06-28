@@ -41,13 +41,25 @@ colors = {}
 for i, topic in enumerate(primary_topics_list):
     colors[topic] = color_list[i] if i < len(color_list) else default_color
 
-# 根据选择的模型创建相应的客户端
-if model_choice == "llama3-70b-8192":
-    api_key = os.environ.get("GROQ_API_KEY")
-    client = Groq(api_key=api_key)
-else:  # glm-4-air
-    api_key = os.environ.get("ZHIPU_API_KEY")
-    client = ZhipuAI(api_key=api_key)
+def setup_client():
+    st.sidebar.markdown("---")
+    model_choice = st.sidebar.selectbox(
+        "Select Model",
+        ["llama3-70b-8192", "glm-4-air"],
+        index=0  # 默认选择 llama3-70b-8192
+    )
+
+    if model_choice == "llama3-70b-8192":
+        api_key = os.environ.get("GROQ_API_KEY")
+        client = Groq(api_key=api_key)
+    else:  # glm-4-air
+        api_key = os.environ.get("ZHIPU_API_KEY")
+        client = ZhipuAI(api_key=api_key)
+    
+    return model_choice, client
+
+# 在主程序的开始部分调用这个函数
+model_choice, client = setup_client()
 
 
 # 修改generate_tag函数
