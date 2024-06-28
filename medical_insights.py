@@ -55,7 +55,7 @@ def setup_client():
     if model_choice == "llama3-70b-8192":
         api_key = os.environ.get("GROQ_API_KEY")
         client = Groq(api_key=api_key)
-    elif model_choice == "glm-4-air"
+    elif model_choice == "glm-4-air":
         api_key = os.environ.get("ZHIPU_API_KEY")
         client = ZhipuAI(api_key=api_key)
     else: 
