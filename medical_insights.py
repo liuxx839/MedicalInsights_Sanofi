@@ -47,7 +47,7 @@ if model_choice == "llama3-70b-8192":
     client = Groq(api_key=api_key)
 else:  # glm-4-air
     api_key = os.environ.get("ZHIPU_API_KEY")
-    client = ZhipuAI(api_key=api_key
+    client = ZhipuAI(api_key=api_key)
 
 
 # 修改generate_tag函数
