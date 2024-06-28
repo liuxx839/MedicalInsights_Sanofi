@@ -1,6 +1,7 @@
 import streamlit as st
 from zhipuai import ZhipuAI
 from groq import Groq
+from openai import OpenAI
 import json
 import os
 import re
@@ -47,17 +48,20 @@ def setup_client():
     st.sidebar.markdown("---")
     model_choice = st.sidebar.selectbox(
         "Select Model",
-        ["llama3-70b-8192", "glm-4-air"],
+        ["llama3-70b-8192", "glm-4-air","glm-4-9b-chat"],
         index=0  # 默认选择 llama3-70b-8192
     )
 
     if model_choice == "llama3-70b-8192":
         api_key = os.environ.get("GROQ_API_KEY")
         client = Groq(api_key=api_key)
-    else:  # glm-4-air
+    elif model_choice == "glm-4-air"
         api_key = os.environ.get("ZHIPU_API_KEY")
         client = ZhipuAI(api_key=api_key)
-    
+    else: 
+        api_key= os.environ.get("SILICONFLOW_API_KEY")
+        client = OpenAI(api_key=api_key, base_url="https://api.siliconflow.cn/v1")
+
     return model_choice, client
 
 # 在主程序的开始部分调用这个函数
