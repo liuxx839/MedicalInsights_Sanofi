@@ -61,9 +61,9 @@ def generate_tag(text):
     completion = client.chat.completions.create(
         model="glm-4-air",  # 填写需要调用的模型名称
         messages=[
-            {"role": "system", "content": f'''
+            {"role": "system", "content": 
 generate_tag_system_message.format(primary_topics_list=','.join(primary_topics_list))}
-'''},       
+},       
             {"role": "user", "content": text}
         ],
         temperature=0.1,
@@ -76,19 +76,9 @@ def rewrite(text, institution, person):
     completion = client.chat.completions.create(
         model="glm-4-air",  # 填写需要调用的模型名称
         messages=[
-       {"role": "system", "content": f'''
-你的职责是改写文本，原则尽量使用原始文本内容
- 
-严格遵循下面的规范文本样式：
-一名{institution}的{department}的{person}提出{{观点}},{{内容间的逻辑关系}},{{进一步的方案}}
-
-执行逻辑：
-1.如果判断原始文本缺失太多内容，请礼貌提醒，无需执行下面的任何步骤或者逻辑
-2. 否则： ”一名{institution}的{department}的{person}提出“， 不需要修改
-3。 原文如果存在的机构和人物，需要脱敏, 替换为“一名{institution}的{person}” 相应的部份
-4.其中{{观点}},{{内容间的逻辑关系}},{{进一步的方案}} 要源于原始文本，尽量使用原文。不需要特别指出{{观点}},{{内容间的逻辑关系}},{{进一步的方案}}
-5.只返回改写后的文本即可，无需解释。不要作额外推理
-    '''},       
+       {"role": "system", "content": 
+        rewrite_system_message
+        },       
         {"role": "user", "content": text}
         ],
         temperature = .1,
@@ -101,21 +91,7 @@ def prob_identy(text):
     completion = client.chat.completions.create(
         model="glm-4",
         messages=[
-            {"role": "system", "content": '''
-你是医学insight检测员指令
-检查给定文本是否符合以下规则:
-
-脱敏信息: 检查是否存在未脱敏的机构名或人名(包括仅姓氏),**但是具体的人物职务或者职称，并非敏感信息，算为已脱敏**
-观点表述: 评估是否包含明确观点
-逻辑关系: 分析内容逻辑性
-解决方案: 判断是否提供进一步方案
-字数要求: 确保字数>20
-
-响应规则
-
-综合判断：首先综合判断整体规则服从情况，只能从：“满足所有条件”，“基本满足”，“需要修改”三个词中选择
-违反规则: 如果有违反情况，请简明指出问题,解释原因，不要罗嗦
-            '''},       
+            {"role": "system", "content": prob_identy_system_message},       
             {"role": "user", "content": text}
         ],
         temperature=0.1,
@@ -175,98 +151,101 @@ with st.sidebar:
         for topic in primary_topics:
             secondary_topics[topic] = st.multiselect(f"Select Secondary Topics for {topic}", topics[topic])
 
-    # 使用 selectbox 创建一个下拉菜单
-    institution = st.selectbox(
-        "Select Institution",
-        [
-            "大型医疗机构",
-            "综合性医院",
-            "专科医院",
-            "三甲医院",
-            "二甲医院",
-            "城市医院",
-            "省立医院",
-            "地区医院",
-            "医疗中心",
-            "教学医院",
-            "医疗集团",
-            "医疗机构",
-            "临床医院",
-            "医疗服务中心"
-        ]
-    )
+  #   # 使用 selectbox 创建一个下拉菜单
+  #   institution = st.selectbox(
+  #       "Select Institution",
+  #       [
+  #           "大型医疗机构",
+  #           "综合性医院",
+  #           "专科医院",
+  #           "三甲医院",
+  #           "二甲医院",
+  #           "城市医院",
+  #           "省立医院",
+  #           "地区医院",
+  #           "医疗中心",
+  #           "教学医院",
+  #           "医疗集团",
+  #           "医疗机构",
+  #           "临床医院",
+  #           "医疗服务中心"
+  #       ]
+  #   )
 
-  # 使用 selectbox 创建一个下拉菜单
-    department = st.selectbox(
-        "Select Dsepartment",
-        [
-              "内分泌科",
-              "肾移植科",
-              "妇产科",
-              "儿科",
-              "急诊科",
-              "心血管内科",
-              "神经内科",
-              "消化内科",
-              "呼吸内科",
-              "骨科",
-              "泌尿外科",
-              "心胸外科",
-              "整形外科",
-              "眼科",
-              "耳鼻喉科",
-              "口腔科",
-              "皮肤科",
-              "中医科",
-              "康复科",
-              "肿瘤科",
-              "放射科",
-              "检验科",
-              "病理科",
-              "药剂科",
-              "麻醉科",
-              "重症医学科",
-              "感染性疾病科",
-              "老年病科",
-              "精神心理科",
-              "肾内科",
-              "血液科",
-              "风湿免疫科",
-              "营养科",
-              "介入科",
-              "核医学科",
-              "超声科",
-              "体检中心",
-              "医学美容科"
-       ]
-    )
+  # # 使用 selectbox 创建一个下拉菜单
+  #   department = st.selectbox(
+  #       "Select Dsepartment",
+  #       [
+  #             "内分泌科",
+  #             "肾移植科",
+  #             "妇产科",
+  #             "儿科",
+  #             "急诊科",
+  #             "心血管内科",
+  #             "神经内科",
+  #             "消化内科",
+  #             "呼吸内科",
+  #             "骨科",
+  #             "泌尿外科",
+  #             "心胸外科",
+  #             "整形外科",
+  #             "眼科",
+  #             "耳鼻喉科",
+  #             "口腔科",
+  #             "皮肤科",
+  #             "中医科",
+  #             "康复科",
+  #             "肿瘤科",
+  #             "放射科",
+  #             "检验科",
+  #             "病理科",
+  #             "药剂科",
+  #             "麻醉科",
+  #             "重症医学科",
+  #             "感染性疾病科",
+  #             "老年病科",
+  #             "精神心理科",
+  #             "肾内科",
+  #             "血液科",
+  #             "风湿免疫科",
+  #             "营养科",
+  #             "介入科",
+  #             "核医学科",
+  #             "超声科",
+  #             "体检中心",
+  #             "医学美容科"
+  #      ]
+  #   )
 
-    # 使用另一个 selectbox 创建一个下拉菜单
-    person = st.selectbox(
-        "Select Person",
-        [
-            "专家",
-            "医生",
-            "主任医师",
-            "副主任医师",
-            "主治医师",
-            "医疗团队成员",
-            "研究人员",
-            "学者",
-            "顾问",
-            "分析师",
-            "工作人员",
-            "主任",
-            "副主任",
-            "教授",
-            "副教授",
-            "讲师",
-            "医疗保健提供者",
-            "护士长",
-            "护士",
-            "研究员"
-        ]
-    )
+  #   # 使用另一个 selectbox 创建一个下拉菜单
+  #   person = st.selectbox(
+  #       "Select Person",
+  #       [
+  #           "专家",
+  #           "医生",
+  #           "主任医师",
+  #           "副主任医师",
+  #           "主治医师",
+  #           "医疗团队成员",
+  #           "研究人员",
+  #           "学者",
+  #           "顾问",
+  #           "分析师",
+  #           "工作人员",
+  #           "主任",
+  #           "副主任",
+  #           "教授",
+  #           "副教授",
+  #           "讲师",
+  #           "医疗保健提供者",
+  #           "护士长",
+  #           "护士",
+  #           "研究员"
+  #       ]
+  #   )
+institution = st.selectbox("Select Institution", institutions)
+department = st.selectbox("Select Department", departments)
+person = st.selectbox("Select Person", persons)
 
 # 主页面内容
 st.write("### Selected Options")
