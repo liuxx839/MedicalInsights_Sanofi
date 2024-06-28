@@ -1,5 +1,6 @@
 import streamlit as st
 from zhipuai import ZhipuAI
+from groq import Groq
 import json
 import os
 import re
@@ -40,14 +41,19 @@ colors = {}
 for i, topic in enumerate(primary_topics_list):
     colors[topic] = color_list[i] if i < len(color_list) else default_color
 
-# 创建 ZhipuAI 客户端
-api_key = os.environ.get("ZHIPU_API_KEY")
-client = ZhipuAI(api_key=api_key)
+# 根据选择的模型创建相应的客户端
+if model_choice == "llama3-70b-8192":
+    api_key = os.environ.get("GROQ_API_KEY")
+    client = Groq(api_key=api_key)
+else:  # glm-4-air
+    api_key = os.environ.get("ZHIPU_API_KEY")
+    client = ZhipuAI(api_key=api_key
+
 
 # 修改generate_tag函数
-def generate_tag(text):
+def generate_tag(text,model="llama3-70b-8192"):
     completion = client.chat.completions.create(
-        model="glm-4-air",  # 填写需要调用的模型名称
+        model=model,  # 填写需要调用的模型名称
         messages=[
             {"role": "system", "content": 
             generate_tag_system_message.format(primary_topics_list=','.join(primary_topics_list))},       
@@ -59,9 +65,9 @@ def generate_tag(text):
     summary = completion.choices[0].message.content.strip()
     return summary
 
-def rewrite(text, institution, department, person):
+def rewrite(text, institution, department, person,model="llama3-70b-8192"):
     completion = client.chat.completions.create(
-        model="glm-4-air",
+        model=model,
         messages=[
             {"role": "system", "content": get_rewrite_system_message(institution, department, person)},
             {"role": "user", "content": text}
@@ -72,9 +78,9 @@ def rewrite(text, institution, department, person):
     summary = completion.choices[0].message.content
     return summary
 
-def prob_identy(text):
+def prob_identy(text,model="llama3-70b-8192"):
     completion = client.chat.completions.create(
-        model="glm-4",
+        model=model,
         messages=[
             {"role": "system", "content": prob_identy_system_message},       
             {"role": "user", "content": text}
@@ -118,7 +124,7 @@ with st.sidebar:
     # 生成标签
     if st.button("Generate Tags"):
         # 直接将用户输入的文本传递给 generate_tag 函数
-        tags = generate_tag(user_input)
+        tags = generate_tag(user_input,model_choice)
         # 去重复并存储生成的标签到会话状态
         unique_tags = list(set(tags.split(",")))  # 将标签按逗号分隔后转换为集合去重，再转换为列表
         st.session_state.tags = ",".join(unique_tags)  # 将去重后的标签列表转换为逗号分隔的字符串并存储到会话状态
@@ -173,8 +179,8 @@ if 'tags' in st.session_state:
 
 # 创建按钮和可编辑文本区域
 if st.button("ReWrite"):
-    rewrite_text = rewrite(user_input, institution, department, person)
-    potential_issues = prob_identy(user_input)
+    rewrite_text = rewrite(user_input, institution, department, person,model_choice)
+    potential_issues = prob_identy(user_input,model_choice)
     st.session_state.rewrite_text = rewrite_text
     st.session_state.potential_issues = potential_issues
 
