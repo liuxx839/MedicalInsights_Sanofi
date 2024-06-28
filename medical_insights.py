@@ -63,9 +63,9 @@ model_choice, client = setup_client()
 
 
 # 修改generate_tag函数
-def generate_tag(text,model="llama3-70b-8192"):
+def generate_tag(text,model_choice="llama3-70b-8192"):
     completion = client.chat.completions.create(
-        model=model,  # 填写需要调用的模型名称
+        model=model_choice,  # 填写需要调用的模型名称
         messages=[
             {"role": "system", "content": 
             generate_tag_system_message.format(primary_topics_list=','.join(primary_topics_list))},       
@@ -77,9 +77,9 @@ def generate_tag(text,model="llama3-70b-8192"):
     summary = completion.choices[0].message.content.strip()
     return summary
 
-def rewrite(text, institution, department, person,model="llama3-70b-8192"):
+def rewrite(text, institution, department, person,model_choice="llama3-70b-8192"):
     completion = client.chat.completions.create(
-        model=model,
+        model=model_choice,
         messages=[
             {"role": "system", "content": get_rewrite_system_message(institution, department, person)},
             {"role": "user", "content": text}
@@ -90,9 +90,9 @@ def rewrite(text, institution, department, person,model="llama3-70b-8192"):
     summary = completion.choices[0].message.content
     return summary
 
-def prob_identy(text,model="llama3-70b-8192"):
+def prob_identy(text,model_choice="llama3-70b-8192"):
     completion = client.chat.completions.create(
-        model=model,
+        model=model_choice,
         messages=[
             {"role": "system", "content": prob_identy_system_message},       
             {"role": "user", "content": text}
