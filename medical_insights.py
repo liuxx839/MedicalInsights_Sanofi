@@ -109,7 +109,7 @@ with st.sidebar:
     - Insight Copilot：您可以在下面提交您的初稿，然后使用此工具对内容进行打标或者重写。您还可以直接修改重写后的结果。
     </div>
     """, unsafe_allow_html=True)
-  
+
     # st.header("Select Options")
     
     # 用户输入框
@@ -135,6 +135,13 @@ with st.sidebar:
     if primary_topics:
         for topic in primary_topics:
             secondary_topics[topic] = st.multiselect(f"Select Secondary Topics for {topic}", topics[topic])
+    # 在 sidebar 部分的最下方添加
+    st.sidebar.markdown("---")  # 添加一条分隔线
+    model_choice = st.sidebar.selectbox(
+        "Select Model",
+        ["llama3-70b-8192", "glm-4-air"],
+        index=0  # 默认选择 llama3-70b-8192
+    )
 
 institution = st.selectbox("Select Institution", institutions)
 department = st.selectbox("Select Department", departments)
