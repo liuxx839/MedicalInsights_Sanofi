@@ -48,7 +48,7 @@ def setup_client():
     st.sidebar.markdown("---")
     model_choice = st.sidebar.selectbox(
         "Select Model",
-        ["llama3-70b-8192", "glm-4-air","Qwen/Qwen2-72B-Instruct"],
+        ["llama3-70b-8192", "glm-4-air","Qwen/Qwen2-72B-Instruct","DeepSeek-V2"],
         index=0  # 默认选择 llama3-70b-8192
     )
 
@@ -58,6 +58,9 @@ def setup_client():
     elif model_choice == "glm-4-air":
         api_key = os.environ.get("ZHIPU_API_KEY")
         client = ZhipuAI(api_key=api_key)
+    elif model_choice == "DeepSeek-V2":
+        api_key = os.environ.get("DEEPSEEK_API_KEY")
+        client = OpenAI(api_key=api_key, base_url="https://api.deepseek.com")
     else: 
         api_key= os.environ.get("SILICONFLOW_API_KEY")
         client = OpenAI(api_key=api_key, base_url="https://api.siliconflow.cn/v1")
