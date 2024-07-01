@@ -193,9 +193,9 @@ for topic, subtopics in secondary_topics.items():
         secondary_topic_tags.append(f'<span class="tag" style="background-color: {colors[topic]};">{subtopic}</span>')
 st.markdown(f"**Secondary Topics:** {' '.join(secondary_topic_tags)}", unsafe_allow_html=True)
 
-st.write(f"**Institution:** {institution}")
-st.write(f"**Department:** {department}")
-st.write(f"**Person:** {person}")
+# st.write(f"**Institution:** {institution}")
+# st.write(f"**Department:** {department}")
+# st.write(f"**Person:** {person}")
 
 # 替换默认标签，按逗号分词
 if 'tags' in st.session_state:
