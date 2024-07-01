@@ -236,7 +236,7 @@ if 'rewrite_text' in st.session_state:
     col1, col2 = st.columns(2)
     
     with col1:
-        st.subheader("Potential Issues:")
+        st.subheader("Assessment Feedback:")
         background_color = determine_issue_severity(st.session_state.potential_issues)
         st.markdown(
             f"""
