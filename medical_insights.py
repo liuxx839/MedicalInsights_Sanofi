@@ -6,6 +6,8 @@ import json
 import os
 import re
 
+st.set_page_config(layout="wide")
+
 from config import get_rewrite_system_message
 
 # 在主程序文件的开头
