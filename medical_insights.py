@@ -164,9 +164,10 @@ with st.sidebar:
         unique_tags = list(set(tags.split(",")))  # 将标签按逗号分隔后转换为集合去重，再转换为列表
         st.session_state.tags = ",".join(unique_tags)  # 将去重后的标签列表转换为逗号分隔的字符串并存储到会话状态
 
-    # # 显示生成的标签
-    # if 'tags' in st.session_state:
-    #     st.write("Generated Tags:", st.session_state.tags)
+        # 生成疾病标签
+        disease_tags = generate_diseases_tag(user_input, model_choice)
+        unique_disease_tags = list(set(disease_tags.split(",")))
+        st.session_state.disease_tags = ",".join(unique_disease_tags)
 
     # 一级主题选择
     primary_topics = st.multiselect("Select Primary Topics", primary_topics_list)
@@ -204,6 +205,13 @@ if 'tags' in st.session_state:
     user_generated_tags = [tag for tag in user_generated_tags if tag]
     tag_html = " ".join([f'<span class="tag" style="background-color: {match_color(tag)};">{tag}</span>' for tag in user_generated_tags])
     st.markdown(f"**AutoTags:** {tag_html}", unsafe_allow_html=True)
+    
+    # 显示疾病标签
+    if 'disease_tags' in st.session_state:
+        disease_tags = re.split(r'[,\s]+', st.session_state.disease_tags.strip())
+        disease_tags = [tag for tag in disease_tags if tag]
+        disease_tag_html = ", ".join(disease_tags)
+        st.markdown(f"**Disease Tags:** {disease_tag_html}")
 
 # 创建按钮和可编辑文本区域
 if st.button("ReWrite"):
