@@ -22,7 +22,7 @@ from config import (
 )
 
 # 设置页面配置
-st.set_page_config(page_title="Medical Insights", layout="centered")
+# st.set_page_config(page_title="Medical Insights", layout="centered")
 
 primary_topics_list = list(topics.keys())
 primary_diseases_list = list(diseases.keys())
