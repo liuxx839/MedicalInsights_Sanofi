@@ -86,19 +86,19 @@ def generate_tag(text,model_choice="llama3-70b-8192"):
     summary = completion.choices[0].message.content.strip()
     return summary
 
-# def generate_diseases_tag(text,model_choice="llama3-70b-8192"):
-#     completion = client.chat.completions.create(
-#         model=model_choice,  # 填写需要调用的模型名称
-#         messages=[
-#             {"role": "system", "content": 
-#             generate_diseases_system_message.format(primary_diseases_list=','.join(primary_diseases_list))},       
-#             {"role": "user", "content": text}
-#         ],
-#         temperature=0.1,
-#         max_tokens=300,
-#     )
-#     summary = completion.choices[0].message.content.strip()
-#     return summary
+def generate_diseases_tag(text,model_choice="llama3-70b-8192"):
+    completion = client.chat.completions.create(
+        model=model_choice,  # 填写需要调用的模型名称
+        messages=[
+            {"role": "system", "content": 
+            generate_diseases_system_message.format(primary_diseases_list=','.join(primary_diseases_list))},       
+            {"role": "user", "content": text}
+        ],
+        temperature=0.1,
+        max_tokens=300,
+    )
+    summary = completion.choices[0].message.content.strip()
+    return summary
 
 def rewrite(text, institution, department, person,model_choice="llama3-70b-8192"):
     completion = client.chat.completions.create(
