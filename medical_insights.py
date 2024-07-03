@@ -224,7 +224,7 @@ if st.button("ReWrite"):
 
 def determine_issue_severity(issues_text):
     if "内容需要修改" in issues_text:
-        return "darkpink"
+        return "red"
     elif "内容基本满足" in issues_text or ("满足所有条件" in issues_text and "内容基本满足" in issues_text):
         return "yellow"
     elif "满足所有条件" in issues_text:
