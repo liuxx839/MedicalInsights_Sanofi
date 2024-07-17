@@ -48,6 +48,7 @@ class Hunyuan:
 
             def create(self, model, messages, temperature=0.1, max_tokens=300):
                 temp_credentials = self.outer.get_temporary_credentials()
+                print("成功获取临时凭证")
                 if not temp_credentials:
                     raise Exception("Failed to obtain temporary credentials")
 
