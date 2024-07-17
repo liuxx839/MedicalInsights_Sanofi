@@ -6,6 +6,18 @@ from tencentcloud.sts.v20180813 import sts_client, models as sts_models
 from tencentcloud.hunyuan.v20230901 import hunyuan_client, models
 from tencentcloud.common.profile.client_profile import ClientProfile
 
+class CompletionResponse:
+    def __init__(self, choices):
+        self.choices = [self.Choice(choice) for choice in choices]
+
+    class Choice:
+        def __init__(self, choice):
+            self.message = self.Message(choice['message'])
+
+        class Message:
+            def __init__(self, message):
+                self.content = message['content']
+
 class Hunyuan:
     def __init__(self, api_id=None, api_key=None):
         self.secret_id = api_id or os.environ.get("TENCENT_SECRET_ID")
@@ -48,7 +60,6 @@ class Hunyuan:
 
             def create(self, model, messages, temperature=0.1, max_tokens=300):
                 temp_credentials = self.outer.get_temporary_credentials()
-                print("成功获取临时凭证")
                 if not temp_credentials:
                     raise Exception("Failed to obtain temporary credentials")
 
@@ -77,16 +88,13 @@ class Hunyuan:
                 try:
                     resp = client.ChatCompletions(req)
                     if resp.Choices:
-                        return {
-                            'choices': [{
-                                'message': {
-                                    'content': resp.Choices[0].Message.Content
-                                }
-                            }]
-                        }
+                        return CompletionResponse([{
+                            'message': {
+                                'content': resp.Choices[0].Message.Content
+                            }
+                        }])
                     else:
-                        return {'choices': []}
+                        return CompletionResponse([])
                 except TencentCloudSDKException as e:
                     print(f"调用混元大模型失败: {e}")
                     return None
-
