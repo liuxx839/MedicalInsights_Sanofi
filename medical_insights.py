@@ -92,7 +92,7 @@ def generate_tag(text,model_choice="llama3-70b-8192"):
         temperature=0.1,
         max_tokens=300,
     )
-    summary = completion.Choices[0].message.content.strip()
+    summary = completion.choices[0].message.content.strip()
     return summary
 
 def generate_diseases_tag(text,model_choice="llama3-70b-8192"):
