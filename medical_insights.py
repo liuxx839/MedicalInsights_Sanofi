@@ -51,7 +51,7 @@ def setup_client():
     st.sidebar.markdown("---")
     model_choice = st.sidebar.selectbox(
         "Select Model",
-        ["llama3-70b-8192", "glm-4-air","Qwen/Qwen2-72B-Instruct","deepseek-chat"],
+        ["llama3-70b-8192", "glm-4-air","hunyuan-lite","hunyuan-pro"],
         index=0  # 默认选择 llama3-70b-8192
     )
 
@@ -68,8 +68,11 @@ def setup_client():
         # 创建 Hunyuan 客户端实例
         client = Hunyuan(api_id=api_id, api_key=api_key)
     else: 
-        api_key= os.environ.get("SILICONFLOW_API_KEY")
-        client = OpenAI(api_key=api_key, base_url="https://api.siliconflow.cn/v1")
+        # 从环境变量获取 API ID 和 API Key
+        api_id = os.environ.get("TENCENT_SECRET_ID")
+        api_key = os.environ.get("TENCENT_SECRET_KEY")
+        # 创建 Hunyuan 客户端实例
+        client = Hunyuan(api_id=api_id, api_key=api_key)
 
     return model_choice, client
 
