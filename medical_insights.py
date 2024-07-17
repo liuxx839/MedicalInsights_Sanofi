@@ -5,6 +5,7 @@ from openai import OpenAI
 import json
 import os
 import re
+from hunyuan import Hunyuan
 
 st.set_page_config(layout="wide")
 
@@ -60,9 +61,12 @@ def setup_client():
     elif model_choice == "glm-4-air":
         api_key = os.environ.get("ZHIPU_API_KEY")
         client = ZhipuAI(api_key=api_key)
-    elif model_choice == "deepseek-chat":
-        api_key = os.environ.get("DEEPSEEK_API_KEY")
-        client = OpenAI(api_key=api_key, base_url="https://api.deepseek.com")
+    elif model_choice == "hunyuan-lite":
+        # 从环境变量获取 API ID 和 API Key
+        api_id = os.environ.get("TENCENT_SECRET_ID")
+        api_key = os.environ.get("TENCENT_SECRET_KEY")
+        # 创建 Hunyuan 客户端实例
+        client = Hunyuan(api_id=api_id, api_key=api_key)
     else: 
         api_key= os.environ.get("SILICONFLOW_API_KEY")
         client = OpenAI(api_key=api_key, base_url="https://api.siliconflow.cn/v1")
