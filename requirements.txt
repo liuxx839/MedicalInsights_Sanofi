@@ -2,3 +2,5 @@ streamlit
 zhipuai
 groq
 openai
+tencentcloud-sdk-python
+
