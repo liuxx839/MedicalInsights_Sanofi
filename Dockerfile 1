@@ -1,0 +1,18 @@
+FROM python:3.11
+
+USER root
+ARG http_proxy="10.31.66.137:3128"
+ARG https_proxy="10.31.66.137:3128"
+ARG DEBUG
+
+VOLUME /home/MedicalInsights
+
+WORKDIR /MedicalInsights
+
+COPY . /MedicalInsights
+
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' > /etc/timezone
+
+RUN pip3 install -r /MedicalInsights/requirements.txt --no-cache-dir -i https://mirrors.aliyun.com/pypi/simple;
+
+ENTRYPOINT streamlit run /MedicalInsights/medical_insights.py
