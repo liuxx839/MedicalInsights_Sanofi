@@ -56,12 +56,12 @@ def setup_client():
     )
 
     if model_choice == "llama3:70b":
-        api_key = os.environ.get("L40_API_KEY")
-        base_url = 'http://litellm.common:4000'
+        api_key = os.environ.get("OPENAI_API_KEY")
+        base_url = os.environ.get('L40_BASE_URL')
         client = OpenAI(api_key = api_key,base_url = base_url)
     elif model_choice == "qwen2:72b":
-        api_key = os.environ.get("L40_API_KEY")
-        base_url = 'http://litellm.common:4000'
+        api_key = os.environ.get("OPENAI_API_KEY")
+        base_url = os.environ.get('L40_BASE_URL')
         client = OpenAI(api_key = api_key,base_url = base_url)
     elif model_choice == "hunyuan-lite":
         # 从环境变量获取 API ID 和 API Key
