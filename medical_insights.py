@@ -51,15 +51,11 @@ def setup_client():
     st.sidebar.markdown("---")
     model_choice = st.sidebar.selectbox(
         "Select Model",
-        ["llama3:70b", "qwen2:72b","hunyuan-lite","hunyuan-pro"],
+        ["llama3.1:70b","llama3:70b", "qwen2:72b","hunyuan-lite","hunyuan-pro"],
         index=0  # 默认选择 llama3:70b
     )
 
-    if model_choice == "llama3:70b":
-        api_key = os.environ.get("OPENAI_API_KEY")
-        base_url = os.environ.get('L40_BASE_URL')
-        client = OpenAI(api_key = api_key,base_url = base_url)
-    elif model_choice == "qwen2:72b":
+    if model_choice == "llama3.1:70b" or model_choice == "llama3:70b" or model_choice == "qwen2:72b":
         api_key = os.environ.get("OPENAI_API_KEY")
         base_url = os.environ.get('L40_BASE_URL')
         client = OpenAI(api_key = api_key,base_url = base_url)
